@@ -1,0 +1,16 @@
+#######################################
+# Syntax Coloring Map For shiftRegister4094SevenSeg
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+shiftRegister4094SevenSeg	KEYWORD1
+
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+begin	KEYWORD2
