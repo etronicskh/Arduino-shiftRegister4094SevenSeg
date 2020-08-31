@@ -13,4 +13,14 @@ shiftRegister4094SevenSeg	KEYWORD1
 # Methods and Functions (KEYWORD2)
 #######################################
 
-begin	KEYWORD2
+begin			KEYWORD2
+print			KEYWORD2
+clear			KEYWORD2
+getArrayString 	KEYWORD2
+
+######################################
+# Constants (LITERAL1)
+#######################################
+
+CATHODE			LITERAL1
+ANODE			LITERAL1
