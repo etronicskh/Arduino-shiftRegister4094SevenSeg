@@ -16,11 +16,11 @@ shiftRegister4094SevenSeg	KEYWORD1
 begin			KEYWORD2
 print			KEYWORD2
 clear			KEYWORD2
-getArrayString 	KEYWORD2
+allOn			KEYWORD2
 
 ######################################
 # Constants (LITERAL1)
 #######################################
 
-CATHODE			LITERAL1
-ANODE			LITERAL1
+ANODE	LITERAL1
+CATHODE	LITERAL1
