@@ -22,7 +22,7 @@ public:
 	void allOn();
 
 private:
-	bool _debug = false;
+	bool _debug = true;
 
 	bool 	_seg_type;
 	uint8_t _digit_num;
@@ -32,7 +32,7 @@ private:
 
 	char _digit_buffer[];	// Store binary mapping code
 
-	void setDigitMapping(char ch[], char *digit);
+	void setDigitMapping(char ch[]);
 	void shiftOutData(char segment_buffer[]);
 };
 

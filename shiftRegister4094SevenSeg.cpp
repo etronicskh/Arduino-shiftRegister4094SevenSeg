@@ -94,8 +94,7 @@ void shiftRegister4094SevenSeg::print(char _ch){
 void shiftRegister4094SevenSeg::print(String _str){
 	char cha_buf[_str.length()];
 	_str.toCharArray(cha_buf, _str.length()+1);
-	setDigitMapping(cha_buf, &_digit_buffer[0]);
-	shiftOutData(_digit_buffer);
+	setDigitMapping(cha_buf);
 }
 
 void shiftRegister4094SevenSeg::clear(){
@@ -116,36 +115,25 @@ void shiftRegister4094SevenSeg::allOn(){
 
 /*-------------------------------------------- Private Function --------------------------------------------*/
 
-void shiftRegister4094SevenSeg::shiftOutData(char segment_buffer[]){
-	digitalWrite(_str_pin, 0);
-	for(int i=_digit_num-1; i>=0; i--){
-		// Debugging
-		if(_debug) {
-			Serial.print("shiftout: "); Serial.println(segment_buffer[i], BIN);
-		} 
+void shiftRegister4094SevenSeg::setDigitMapping(char ch[]){
+	uint8_t _cha_len = strlen(ch);
 
-		if(_seg_type) shiftOut(_data_pin, _clk_pin, MSBFIRST, segment_buffer[i]);	//Common cathode
-		else shiftOut(_data_pin, _clk_pin, MSBFIRST, ~segment_buffer[i]);			//Common anode
-	}
-	digitalWrite(_str_pin, 1);
-}
+	char digit[_digit_num];
+	for (size_t k=0; k<_digit_num; k++) { digit[k] = 0;	} // Reset buffer.
 
-void shiftRegister4094SevenSeg::setDigitMapping(char ch[], char *digit){
-	for (size_t k=0; k<_digit_num; k++) {
-		digit[k] = 0;	// Reset buffer.
-	} 
-	int _start_idx = _digit_num-strlen(ch);
-	for (int i = 0; i < strlen(ch); ++i) {
-		if(ch[i]=='.') _start_idx++;	// '.' is not a digit count.
-	}
+	int _start_idx = (_digit_num-_cha_len);
+	for (size_t i = 0; i < _cha_len; ++i) { if(ch[i]=='.') _start_idx++;} // '.' is not a digit count.
 
 	// Debugging
 	if(_debug){
-		Serial.print("array length: "); Serial.println(strlen(ch));
+		Serial.print("array length: "); Serial.println(_cha_len);
+		for (int i=0; i<_cha_len; ++i) {
+			Serial.println(ch[i]);
+		}
 	}
 	
 	int _cha_idx = 0;
-	for(int _digit=_start_idx; _digit<_digit_num; _digit++){
+	for(size_t _digit=_start_idx; _digit<_digit_num; _digit++){
 		char _char = ch[_cha_idx];
 		if(_char>='0' && _char<='9'){
 			digit[_digit] = digitCodeMap[_char- '0'];
@@ -162,13 +150,24 @@ void shiftRegister4094SevenSeg::setDigitMapping(char ch[], char *digit){
 		}else{
 			digit[_digit] = digitCodeMap[SEG_BLANK_INDEX];
 		}
-		_cha_idx++;
+
+		if(_cha_idx++ >= _cha_len){ break; }	//Over array size.
 
 		//Add '.' to current digit and move to next.
 		if (ch[_cha_idx] == '.'){
 			digit[_digit] |= digitCodeMap[SEG_PERIOD_INDEX];
-			_cha_idx++;
+			if(_cha_idx++ >= _cha_len){ break; } //Over array size.
 		}
 	}
 
+	shiftOutData(digit);	// send data to shift-register.
+}
+
+void shiftRegister4094SevenSeg::shiftOutData(char segment_buffer[]){
+	digitalWrite(_str_pin, 0);
+	for(int i=_digit_num-1; i>=0; i--){
+		if(_seg_type) shiftOut(_data_pin, _clk_pin, MSBFIRST, segment_buffer[i]);	//Common cathode
+		else shiftOut(_data_pin, _clk_pin, MSBFIRST, ~segment_buffer[i]);			//Common anode
+	}
+	digitalWrite(_str_pin, 1);
 }
