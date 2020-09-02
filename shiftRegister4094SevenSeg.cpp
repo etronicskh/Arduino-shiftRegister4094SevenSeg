@@ -87,6 +87,21 @@ void shiftRegister4094SevenSeg::print(float _val){
 	print((String) _val);
 }
 
+void shiftRegister4094SevenSeg::print(float _val, uint8_t _dec){
+	String str_buffer;
+	String _str = (String) _val;
+	for (int i=0; i<(_str.length()-3) ; i++){ str_buffer+=_str[i];}
+	if(_dec<=2){
+		uint8_t _last_num = (_str.length()-(3-_dec));
+		if(_dec==1)  _last_num++;
+		for (int i=(_str.length()-3); i<_last_num; i++){ str_buffer+=_str[i];}
+	}else{
+		for (int i=(_str.length()-3); i<_str.length(); i++){ str_buffer+=_str[i];}
+		for(int i=0; i<_dec-2; i++){str_buffer+='0';}
+	}
+	print(str_buffer);
+}
+
 void shiftRegister4094SevenSeg::print(char _ch){
 	print((String) _ch);
 }
@@ -119,7 +134,7 @@ void shiftRegister4094SevenSeg::setDigitMapping(char ch[]){
 	uint8_t _cha_len = strlen(ch);
 
 	char digit[_digit_num];
-	for (size_t k=0; k<_digit_num; k++) { digit[k] = 0;	} // Reset buffer.
+	for (size_t k=0; k<_digit_num; k++) { digit[k] = 0;	} // Clear buffer.
 
 	int _start_idx = (_digit_num-_cha_len);
 	for (size_t i = 0; i < _cha_len; ++i) { if(ch[i]=='.') _start_idx++;} // '.' is not a digit count.

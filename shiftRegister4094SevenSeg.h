@@ -17,12 +17,12 @@ public:
 	void print(int _val);
 	void print(long _val);
 	void print(float _val);
+	void print(float _val, uint8_t _dec);
 	void print(String _str);
-
 	void allOn();
 
 private:
-	bool _debug = true;
+	bool _debug = false;
 
 	bool 	_seg_type;
 	uint8_t _digit_num;
