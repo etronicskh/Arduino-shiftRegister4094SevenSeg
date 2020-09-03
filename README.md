@@ -19,7 +19,7 @@ Use 3 pins of Arduino to control multiple 7-segment display with 4094 8-bit shif
 - **Clock pin**: CLK or CP pin on shift register.
 - **Strobe pin**: STR on pin shift register.
 
-![input](https://raw.githubusercontent.com/ssuhrid/arduino-seven-segment-using-4094-Library/master/extras/1234.png)
+![input](https://github.com/eTRONICSKH/Arduino-shiftRegister4094SevenSeg/blob/master/circuit.png)
 
 ## Reference
 ### Constructor
