@@ -30,8 +30,6 @@ private:
 	uint8_t _clk_pin;
 	uint8_t _str_pin;
 
-	char _digit_buffer[];	// Store binary mapping code
-
 	void setDigitMapping(char ch[]);
 	void shiftOutData(char segment_buffer[]);
 };
