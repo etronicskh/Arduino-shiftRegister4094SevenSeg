@@ -2,7 +2,7 @@
 
 #include "Arduino.h"
 #include "shiftRegister4094SevenSeg.h"
-#include "CharacterEncoding.h"
+//#include "CharacterEncoding.h"
 #include <string.h>
 
 #define SEG_LETTER_INDEX 10
